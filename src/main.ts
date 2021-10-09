@@ -11,13 +11,13 @@ async function bootstrap() {
     store: sessionStore,
     saveUninitialized: true,
     resave: true,
-    name: "__cent_sid",
+    name: "sid",
     secret: "secret",
-    cookie: {
-      httpOnly: false,
-      signed: true,
-      maxAge: 60000,
-    },
+    // cookie: {
+    //   httpOnly: false,
+    //   signed: true,
+    //   maxAge: 60000,
+    // },
   });
   app.use(serverSession);
   app.use(passport.initialize());

@@ -17,9 +17,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     console.log("log from the JWT Strategy----------------", payload);
     /**
      * 1. Read and validate the JWT Token. FYI the validated token is the argyment to this function
-     * 2. Get Sesssion info using signature in JWT
-     * 3. If valid session exists, continue with response or throw Unauthorized Error
+     * 2. Make Database call to the User Service to retrieve User info about JWT Subject `payload.sub`
+     * 3. Add Caching measure for token: use an LRU-Cache as first step before making DB Service Call
+     * 4. If valid session exists, continue with response or throw Unauthorized Error
      */
-    return { userId: payload.sub, username: payload.username };
+    // return { userId: payload.sub, username: payload.username };
+    return payload;
   }
 }

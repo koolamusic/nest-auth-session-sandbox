@@ -19,14 +19,22 @@ export class JwtAuthGuard extends AuthGuard("jwt") {
       "log from the JWT Guard----------------",
       request.isAuthenticated(),
       result,
+      request.session.passport,
+      request.headers,
+      await request.sessionStore.get(request.headers['signature'], (err, sess) => {
+         console.log('//////////////////////////////////////',
+         err, sess, '////////////////////////////////////////////////')
+      }),
       request.sessionID
     );
-    try {
-      if (request.session.passport.user) {
-        return result;
-      }
-    } catch (e) {
-      throw new UnauthorizedException();
-    }
+
+    return result;
+    // try {
+    //   if (request.session.passport.user) {
+    //     return result;
+    //   }
+    // } catch (e) {
+    //   throw new UnauthorizedException();
+    // }
   }
 }

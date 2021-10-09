@@ -14,6 +14,7 @@ export class AppController {
     console.log(
       "=========BEFORE LOGIN REQ========",
       req.isAuthenticated(),
+      req.headers,
       req.user,
       req.sessionID
     );
@@ -23,13 +24,14 @@ export class AppController {
     console.log(
       "===========AFTER LOGIN REQ========",
       req.isAuthenticated(),
+      req.headers,
       req.sessionID,
       req.user
     );
     return user;
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(LocalAuthGuard)
   @Post("auth/profile")
   getProfile(@Request() req) {
     console.log(

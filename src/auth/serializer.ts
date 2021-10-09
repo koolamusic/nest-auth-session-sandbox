@@ -14,4 +14,10 @@ export class CookieSerializer extends PassportSerializer {
 
     done(null, payload);
   }
+
+
+  // deserializeUser(payload: { id: number; role: string }, done: (err: Error, user: Omit<User, 'password'>) => void) {
+  //   const user = this.authService.findById(payload.id);
+  //   done(null, user);
+  // }
 }
