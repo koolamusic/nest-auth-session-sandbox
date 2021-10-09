@@ -1,9 +1,13 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import {
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
 
 @Injectable()
-export class LocalAuthGuard extends AuthGuard('local') {
+export class LocalAuthGuard extends AuthGuard("local") {
   // canActivate(context: ExecutionContext) {
   //   // Add your custom authentication logic here
   //   // for example, call super.logIn(request) to establish a session.
@@ -15,19 +19,18 @@ export class LocalAuthGuard extends AuthGuard('local') {
   //   return result
   // }
 
-
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const result = (await super.canActivate(context) as boolean); // THIS MUST BE CALLED FIRST
+    const result = (await super.canActivate(context)) as boolean; // THIS MUST BE CALLED FIRST
     await super.logIn(request);
     return result;
-}
+  }
 
-handleRequest(err, user, info) {
+  handleRequest(err, user, info) {
     if (err || !user) {
-        throw err || new UnauthorizedException();
+      throw err || new UnauthorizedException();
     }
 
     return user;
-}
+  }
 }

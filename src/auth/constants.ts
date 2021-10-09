@@ -1,9 +1,7 @@
-import * as session from 'express-session'
-
+import * as session from "express-session";
 
 export const jwtConstants = {
-  secret: 'secret',
+  secret: "secret",
 };
 
-
-export const sessionStore = new session.MemoryStore()
+export const sessionStore = new session.MemoryStore();
