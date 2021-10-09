@@ -15,6 +15,8 @@ export class JwtAuthGuard extends AuthGuard("jwt") {
     const result = (await super.canActivate(context)) as boolean;
     // const loginUser = await super.logIn(request)
 
+    try {
+
     console.log(
       "log from the JWT Guard----------------",
       request.isAuthenticated(),
@@ -22,13 +24,27 @@ export class JwtAuthGuard extends AuthGuard("jwt") {
       request.session.passport,
       request.headers,
       await request.sessionStore.get(request.headers['signature'], (err, sess) => {
+
+        try {
+        
+        if(err) throw new UnauthorizedException(err)
+        if(sess.cookie) {
+          console.log("sess.cookie in jwt0-guard", sess.cookie, sess.cookie.data )
+        }
          console.log('//////////////////////////////////////',
-         err, sess, '////////////////////////////////////////////////')
+         sess, '////////////////////////////////////////////////')
+        } catch (error) {
+          console.log(error)
+        }
       }),
       request.sessionID
     );
 
     return result;
+  } catch (error) {
+      throw new UnauthorizedException(error);
+      
+  }
     // try {
     //   if (request.session.passport.user) {
     //     return result;
